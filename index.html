@@ -1,0 +1,563 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Mistyarts Prints</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;700&family=Instrument+Serif&family=Lora:ital,wght@1,400;1,500&display=swap">
+<style>
+:root {
+  --bg: #352c27; --panel: #41362f; --line: #5a4c42; --cream: #f3e9d9; --muted: #b4a799;
+  --gold: #cba463; --gold-ink: #2a211b; --bad: #e59a8a;
+  --font-sans: "Hanken Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-serif: "Lora", Georgia, "Times New Roman", serif;
+  --font-mark: "Instrument Serif", Georgia, serif;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; background: var(--bg); }
+body { background: var(--bg); color: var(--cream); font-family: var(--font-sans); font-size: 16px; line-height: 1.55; margin: 0;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 8px 110px; }
+body.locked { overflow: hidden; }
+h1, h2, h3, p { margin: 0; }
+button, input, textarea, select { font: inherit; color: inherit; }
+button { cursor: pointer; }
+a { color: var(--gold); }
+:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+.col { max-width: 720px; margin-inline: auto; }
+.wide { max-width: 1040px; margin-inline: auto; }
+.label { font-size: 13px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); }
+hr { border: 0; border-top: 1px solid var(--line); margin: 0; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; } }
+
+.top { position: relative; text-align: center; padding: 48px 0 30px; }
+.dot { position: absolute; border-radius: 50%; }
+.d1 { width: 14px; height: 14px; background: #6f8f63; left: 7%; top: 28px; }
+.d2 { width: 10px; height: 10px; background: #7c6489; left: 1%; top: 58px; }
+.d3 { width: 24px; height: 24px; background: #b5533c; right: 8%; top: 26px; }
+.d4 { width: 15px; height: 15px; background: #c9a23f; right: 2%; top: 60px; }
+.d5 { width: 19px; height: 19px; background: #5f7fa8; right: 13%; top: 84px; }
+.mono-mark { width: 76px; height: 76px; border: 1px solid var(--cream); border-radius: 50%; margin: 0 auto 26px; display: grid; place-items: center; font-family: var(--font-mark); font-size: 34px; letter-spacing: -.04em; line-height: 1; padding-bottom: 4px; }
+.top h1 { font-size: clamp(40px, 8vw, 54px); font-weight: 700; letter-spacing: .005em; line-height: 1.1; }
+.tag { font-family: var(--font-serif); font-style: italic; color: var(--gold); font-size: clamp(17px, 3.4vw, 21px); margin-top: 12px; }
+.jump { display: flex; justify-content: center; gap: 22px; margin-top: 22px; flex-wrap: wrap; }
+.jump a { font-size: 13px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; text-decoration: none; color: var(--cream); padding-block: 4px; border-bottom: 1px solid var(--line); }
+.jump a:hover { border-color: var(--gold); color: var(--gold); }
+.tt { display: inline-flex; align-items: center; gap: 8px; margin-top: 22px; padding: 9px 16px; border: 1px solid var(--gold); color: var(--gold); text-decoration: none; font-weight: 700; font-size: 14px; letter-spacing: .04em; }
+.tt:hover { background: var(--gold); color: var(--gold-ink); }
+.tt svg { width: 16px; height: 16px; fill: currentColor; }
+
+.banner { max-width: 720px; margin: 16px auto 0; padding: 14px 18px; border: 1px solid var(--gold); background: var(--panel); text-align: center; }
+.banner.bad { border-color: var(--bad); color: var(--bad); }
+
+.shop { padding-block: 36px 44px; }
+.shop .label { text-align: center; display: block; }
+.shop .lede { text-align: center; color: var(--muted); font-size: 15px; margin: 8px auto 28px; max-width: 520px; }
+.cols { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 34px 22px; align-items: start; }
+@media (max-width: 860px) { .cols { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 460px) { .cols { grid-template-columns: 1fr; } }
+.pc { margin: 0; display: flex; flex-direction: column; }
+.piece { display: block; width: 100%; padding: 0; border: 0; background: transparent; position: relative; }
+.mat { background: #efe6d6; padding: 6%; box-shadow: 0 8px 22px rgba(0,0,0,.35); }
+.mat .ph { display: block; width: 100%; aspect-ratio: var(--ar); overflow: hidden; background: var(--panel); }
+.mat img { display: block; width: 100%; height: 100%; object-fit: cover; transition: filter .25s ease; }
+.piece:hover img { filter: brightness(1.06); }
+.pc figcaption { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-top: 14px; }
+.pc figcaption b { font-size: 17px; font-weight: 700; }
+.pc figcaption span { font-size: 13px; color: var(--muted); text-align: right; }
+.sizes { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.sz { border: 1px solid var(--line); background: transparent; padding: 6px 10px; font-size: 13px; line-height: 1.2; text-align: center; }
+.sz small { display: block; color: var(--muted); font-size: 12px; }
+.sz:hover { border-color: var(--gold); }
+.sz[aria-pressed="true"] { background: var(--panel); border-color: var(--gold); }
+.sz[aria-pressed="true"] small { color: var(--gold); }
+.add { margin-top: 10px; }
+.btn { display: inline-flex; align-items: center; justify-content: center; border: 0; background: var(--gold); color: var(--gold-ink); font-weight: 700; padding: 13px 22px; font-size: 15px; letter-spacing: .02em; text-decoration: none; }
+.btn:hover { filter: brightness(1.08); }
+.btn:disabled { opacity: .45; cursor: not-allowed; filter: none; }
+.btn.full { width: 100%; }
+.btn.ghost { background: transparent; color: var(--gold); border: 1px solid var(--gold); }
+.btn.sm { padding: 9px 14px; font-size: 14px; }
+.btn.paypal { background: #ffc439; color: #111; }
+.print-notes { margin: 38px auto 0; max-width: 720px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; border-top: 1px solid var(--line); padding-top: 22px; }
+@media (max-width: 600px) { .print-notes { grid-template-columns: 1fr; gap: 12px; } }
+.print-notes b { display: block; font-size: 13px; letter-spacing: .1em; text-transform: uppercase; color: var(--gold); margin-bottom: 2px; }
+.print-notes span { color: var(--muted); font-size: 14px; }
+
+.menu { padding-block: 20px; }
+details.comm { border: 1px solid var(--line); background: var(--panel); }
+details.comm > summary { list-style: none; cursor: pointer; padding: 18px clamp(16px, 4vw, 26px); display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+details.comm > summary::-webkit-details-marker { display: none; }
+details.comm > summary .t { font-size: 20px; font-weight: 700; }
+details.comm > summary .s { display: block; color: var(--muted); font-size: 14px; font-weight: 400; }
+details.comm > summary::after { content: "+"; font-size: 26px; color: var(--gold); line-height: 1; }
+details.comm[open] > summary::after { content: "\2212"; }
+.comm-body { padding: 4px clamp(8px, 3vw, 20px) 26px; background: var(--bg); border-top: 1px solid var(--line); }
+.svc { display: block; position: relative; }
+.svc input { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; margin: 0; cursor: pointer; }
+.svc-in { display: grid; grid-template-columns: 20px minmax(0, 1fr) auto; column-gap: 12px; align-items: baseline; padding: 14px 14px 14px 12px; border: 1px solid transparent; }
+.svc:hover .svc-in { border-color: var(--line); }
+.svc input:checked + .svc-in { background: var(--panel); border-color: var(--gold); }
+.svc input:focus-visible + .svc-in { outline: 2px solid var(--gold); outline-offset: 2px; }
+.ring { width: 14px; height: 14px; border-radius: 50%; border: 1px solid var(--muted); align-self: center; justify-self: center; }
+.svc input:checked + .svc-in .ring { background: var(--gold); border-color: var(--gold); box-shadow: inset 0 0 0 3px var(--panel); }
+.nm { font-size: clamp(19px, 4vw, 22px); font-weight: 700; }
+.pr { font-size: clamp(19px, 4vw, 22px); font-weight: 700; color: var(--gold); }
+.ds { grid-column: 2 / 4; color: var(--muted); font-size: 15px; margin-top: 4px; }
+.sub { text-align: center; margin: 28px 0 12px; }
+.sub .label { display: block; }
+.note { text-align: center; font-style: italic; color: var(--muted); font-size: 14px; margin-top: 18px; }
+.clear { display: block; margin: 14px auto 0; background: none; border: 0; color: var(--muted); text-decoration: underline; font-size: 14px; }
+.addons { margin-top: 28px; background: var(--panel); border: 1px solid var(--line); padding: 22px clamp(16px, 4vw, 30px); }
+.addons h3 { font-size: 20px; font-weight: 700; color: var(--gold); margin-bottom: 4px; }
+.addons .hint { color: var(--muted); font-size: 14px; margin-bottom: 10px; }
+.ad { display: grid; grid-template-columns: 96px minmax(0, 1fr) auto; align-items: center; column-gap: 10px; padding-block: 7px; cursor: default; }
+.ad .adp { color: var(--gold); font-weight: 700; font-size: 15px; text-align: right; }
+.ctl { display: flex; align-items: center; }
+.ctl input { width: 20px; height: 20px; accent-color: var(--gold); margin: 0 0 0 4px; cursor: pointer; }
+label.ad { cursor: pointer; }
+.qty { display: inline-flex; align-items: center; border: 1px solid var(--line); }
+.qty button { width: 30px; height: 30px; border: 0; background: transparent; font-size: 18px; line-height: 1; }
+.qty button:hover { background: var(--bg); }
+.qty output { min-width: 26px; text-align: center; font-weight: 700; }
+@media (max-width: 480px) { .ad { grid-template-columns: 96px minmax(0, 1fr); } .ad .adp { grid-column: 2; text-align: left; } }
+.addons.off { opacity: .45; pointer-events: none; }
+
+.request { padding-block: 34px; }
+.request h2 { text-align: center; margin-bottom: 20px; }
+.card { background: var(--panel); border: 1px solid var(--line); padding: 22px clamp(16px, 4vw, 30px); }
+.card + .card { margin-top: 20px; }
+.card h3 { font-size: 18px; color: var(--gold); margin-bottom: 12px; }
+.empty { color: var(--muted); text-align: center; padding-block: 8px 4px; }
+.cl { display: grid; grid-template-columns: 52px minmax(0, 1fr) auto; gap: 12px; align-items: center; padding-block: 8px; border-bottom: 1px solid var(--line); }
+.cl img { width: 52px; height: 52px; object-fit: cover; display: block; }
+.cl .cn { font-weight: 700; line-height: 1.25; }
+.cl .cn small { display: block; font-weight: 400; color: var(--muted); font-size: 13px; }
+.cl .cr { display: grid; justify-items: end; gap: 4px; }
+.cl .cr b { color: var(--gold); }
+.ln { display: flex; justify-content: space-between; gap: 14px; padding-block: 5px; }
+.ln span:last-child { white-space: nowrap; }
+.ln.rule { border-top: 1px solid var(--line); margin-top: 8px; padding-top: 12px; }
+.ln.big { font-weight: 700; font-size: 20px; color: var(--gold); }
+.ln.dim { color: var(--muted); font-size: 15px; }
+.fields { display: grid; gap: 14px; margin-top: 18px; }
+.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+@media (max-width: 520px) { .row2 { grid-template-columns: 1fr; } }
+label.f { display: grid; gap: 5px; font-size: 14px; color: var(--muted); }
+.f input, .f textarea, .f select { width: 100%; background: var(--bg); border: 1px solid var(--line); border-radius: 0; padding: 10px 12px; color: var(--cream); }
+.f textarea { resize: vertical; min-height: 96px; }
+.f.out textarea { font-family: ui-monospace, "SFMono-Regular", Menlo, monospace; font-size: 12.5px; line-height: 1.5; min-height: 200px; }
+.chk { display: flex; align-items: center; gap: 10px; font-size: 15px; color: var(--cream); }
+.chk input { width: 18px; height: 18px; accent-color: var(--gold); margin: 0; }
+.how { color: var(--muted); font-size: 14px; margin-top: 12px; }
+.err { color: var(--bad); font-size: 15px; margin-top: 12px; min-height: 1em; }
+.pay { display: grid; gap: 10px; margin-top: 18px; }
+
+.terms { color: var(--muted); font-size: 14px; line-height: 1.7; padding-block: 26px 10px; }
+.terms b { color: var(--cream); }
+.terms p + p { margin-top: 8px; }
+
+.bar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; background: var(--panel); border-top: 1px solid var(--line);
+  padding-block: 10px max(10px, env(safe-area-inset-bottom, 0px)); padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.bar-in { max-width: 720px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 14px; }
+.bar-t { min-width: 0; }
+.bar-t small { display: block; color: var(--muted); font-size: 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bar-t strong { font-size: 22px; color: var(--gold); line-height: 1.2; }
+
+.lb { position: fixed; inset: 0; z-index: 50; background: rgba(20, 15, 12, .94); display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 8px;
+  padding: max(16px, env(safe-area-inset-top, 0px)) max(12px, env(safe-area-inset-right, 0px)) max(16px, env(safe-area-inset-bottom, 0px)) max(12px, env(safe-area-inset-left, 0px)); }
+.lb[hidden], [hidden] { display: none !important; }
+.lb figure { margin: 0; display: grid; justify-items: center; gap: 12px; min-width: 0; }
+.lb img { max-width: 100%; max-height: calc(100vh - 140px); width: auto; height: auto; object-fit: contain; }
+.lb figcaption { text-align: center; }
+.lb figcaption b { display: block; font-size: 18px; }
+.lb figcaption span { color: var(--muted); font-size: 14px; }
+.lbn, .lbx { border: 1px solid var(--line); background: var(--panel); width: 44px; height: 44px; border-radius: 50%; font-size: 22px; line-height: 1; }
+.lbn:hover, .lbx:hover { border-color: var(--gold); color: var(--gold); }
+.lbx { position: absolute; top: max(12px, env(safe-area-inset-top, 0px)); right: max(12px, env(safe-area-inset-right, 0px)); }
+@media (max-width: 560px) { .lb { grid-template-columns: 1fr; } .lbn { position: absolute; bottom: max(16px, env(safe-area-inset-bottom, 0px)); } .lbn.prev { left: max(12px, env(safe-area-inset-left, 0px)); } .lbn.next { right: max(12px, env(safe-area-inset-right, 0px)); } .lb img { max-height: calc(100vh - 190px); } }
+</style>
+</head>
+<body>
+<main>
+  <header class="top col" id="top">
+    <span class="dot d1"></span><span class="dot d2"></span><span class="dot d3"></span><span class="dot d4"></span><span class="dot d5"></span>
+    <div class="mono-mark" aria-hidden="true">KB</div>
+    <h1>Mistyarts</h1>
+    <p class="tag">Painted &bull; Detailed &bull; Printed to order</p>
+    <nav class="jump" aria-label="Page sections"><a href="#prints">Prints</a><a href="#commissions">Commissions</a><a href="#order">Checkout</a></nav>
+    <a class="tt" href="https://www.tiktok.com/@mistyarts" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.6 2h-3.2v13.3a2.9 2.9 0 1 1-2.9-2.9c.3 0 .6 0 .8.1V9.2a6.1 6.1 0 1 0 5.3 6.1V8.6a7.9 7.9 0 0 0 4.6 1.5V6.9a4.7 4.7 0 0 1-4.6-4.9z"/></svg>
+      Follow @mistyarts on TikTok
+    </a>
+  </header>
+  <div class="banner" id="banner" role="status" hidden></div>
+  <hr class="col" style="margin-top:16px">
+
+  <section class="shop wide" id="prints" aria-label="Art prints">
+    <span class="label">Art prints</span>
+    <p class="lede">Pick a print size, or a digital file, under any piece and add it to your order. Prints are made to order and shipped straight to you.</p>
+    <div class="cols" id="cols"></div>
+    <div class="print-notes">
+      <p><b>Printed to order</b><span>Museum-quality fine art paper, produced close to you.</span></p>
+      <p><b>Ships to you</b><span>Shipping is calculated at checkout from your address.</span></p>
+      <p><b>Digital files</b><span>Emailed to you after payment, usually within a day.</span></p>
+    </div>
+  </section>
+  <hr class="col">
+
+  <section class="menu col" id="commissions" aria-label="Commissions">
+    <details class="comm" id="comm">
+      <summary><span><span class="t">Want something custom?</span><span class="s">Commissions are open: characters, fanart, portraits, paintings</span></span></summary>
+      <div class="comm-body">
+        <div class="sub"><span class="label">Characters</span></div>
+        <div id="dig"></div>
+        <div class="sub"><span class="label">Traditional Paintings</span><span style="color:var(--muted);font-size:14px">Landscape &amp; Acrylic/Oil</span></div>
+        <div id="trad"></div>
+        <p class="note">Shipping is not included and will be calculated separately for traditional pieces.</p>
+        <button class="clear" type="button" id="clear-comm">Clear commission</button>
+        <div class="addons off" id="addbox">
+          <h3>Add-ons</h3>
+          <p class="hint">Choose a commission above to use these.</p>
+          <div id="adds"></div>
+        </div>
+      </div>
+    </details>
+  </section>
+  <hr class="col">
+
+  <section class="request col" id="order" aria-label="Checkout">
+    <h2 class="label">Checkout</h2>
+
+    <div class="card" id="cart-card">
+      <h3>Your prints</h3>
+      <div id="sum"></div>
+      <form id="co" novalidate hidden>
+        <div class="fields">
+          <div class="row2">
+            <label class="f" for="c-name">Full name<input id="c-name" name="name" autocomplete="name" required></label>
+            <label class="f" for="c-email">Email<input id="c-email" name="email" type="email" autocomplete="email" required></label>
+          </div>
+          <div id="ship-fields" class="fields" style="margin-top:0">
+            <label class="f" for="c-country">Country<select id="c-country" name="country" autocomplete="country" required></select></label>
+            <label class="f" for="c-line1">Address<input id="c-line1" name="line1" autocomplete="address-line1" required></label>
+            <label class="f" for="c-line2">Apartment, suite, etc. (optional)<input id="c-line2" name="line2" autocomplete="address-line2"></label>
+            <div class="row2">
+              <label class="f" for="c-city">City<input id="c-city" name="city" autocomplete="address-level2" required></label>
+              <label class="f" for="c-state">State / province<input id="c-state" name="state" autocomplete="address-level1"></label>
+            </div>
+            <div class="row2">
+              <label class="f" for="c-zip">ZIP / postal code<input id="c-zip" name="zip" autocomplete="postal-code" required></label>
+              <label class="f" for="c-phone">Phone (optional, for the courier)<input id="c-phone" name="phone" type="tel" autocomplete="tel"></label>
+            </div>
+          </div>
+        </div>
+        <p class="err" id="err" role="alert"></p>
+        <div class="pay">
+          <button class="btn full" type="button" id="pay-stripe" disabled>Pay by card</button>
+          <button class="btn full paypal" type="button" id="pay-paypal" disabled>Pay with PayPal</button>
+        </div>
+        <p class="how">You&rsquo;ll finish paying on Stripe&rsquo;s or PayPal&rsquo;s secure page. Your card details never touch this site.</p>
+      </form>
+    </div>
+
+    <div class="card" id="comm-card" hidden>
+      <h3>Commission request</h3>
+      <p class="how" style="margin-top:0">Commissions aren&rsquo;t paid here. Copy this request and send it to <span id="contact"></span>; I&rsquo;ll confirm your spot and send a deposit link.</p>
+      <div id="csum" style="margin-top:12px"></div>
+      <div class="fields">
+        <label class="f" for="f-name">Name or handle<input id="f-name" autocomplete="name"></label>
+        <label class="f" for="f-contact">How to reach you (email or @handle)<input id="f-contact"></label>
+        <label class="f" for="f-notes">Details: character, pose, colors, reference links<textarea id="f-notes"></textarea></label>
+        <label class="chk" for="f-private"><input type="checkbox" id="f-private"> Private commission (please do not post the finished piece)</label>
+        <label class="f out" for="out">Request to send<textarea id="out" readonly></textarea></label>
+        <button class="btn full" type="button" id="copy">Copy request</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="terms col" aria-label="Terms">
+    <hr style="margin-bottom:20px">
+    <p><b>Prints:</b> printed to order and shipped by our print partner, usually within a few days of payment; delivery time depends on where you are. If a print arrives damaged or misprinted, send a photo and I&rsquo;ll replace it.</p>
+    <p><b>Digital files:</b> a high-resolution file emailed to you after payment. For personal use and printing for yourself only; no reselling or sharing.</p>
+    <p><b>Commissions:</b> 1&ndash;3 weeks depending on queue. 50% deposit upfront, remainder due before the final file is sent.</p>
+    <p><b>Usage:</b> personal use only. Buying a print doesn&rsquo;t include reproduction rights. No commercial use, resale, or AI training without a separate license.</p>
+  </section>
+</main>
+
+<div class="bar" role="region" aria-label="Order total">
+  <div class="bar-in">
+    <div class="bar-t"><small id="bar-s">Nothing added yet</small><strong id="bar-p">$0</strong></div>
+    <a class="btn" href="#order">Checkout</a>
+  </div>
+</div>
+
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Artwork viewer" hidden>
+  <button class="lbx" type="button" data-lb="close" aria-label="Close">&times;</button>
+  <button class="lbn prev" type="button" data-lb="-1" aria-label="Previous piece">&lsaquo;</button>
+  <figure><img id="lb-img" alt=""><figcaption><b id="lb-t"></b><span id="lb-m"></span></figcaption></figure>
+  <button class="lbn next" type="button" data-lb="1" aria-label="Next piece">&rsaquo;</button>
+</div>
+
+<script type="module">
+import catalog from "./catalog.mjs";
+
+const $ = (s) => document.querySelector(s);
+const money = (n) => "$" + (Math.round(n * 100) % 100 === 0 ? String(Math.round(n)) : n.toFixed(2));
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const ART = catalog.pieces;
+const DIGITAL = catalog.digital;
+const sizesFor = (a) => catalog.sizes[a.shape || "portrait"].concat([{ id: DIGITAL.id, name: DIGITAL.name, price: DIGITAL.price, digital: true }]);
+const artById = (id) => ART.find((a) => a.id === id);
+const sizeOf = (a, id) => sizesFor(a).find((s) => s.id === id);
+
+let cart = [];           // [{ art, size, qty }]
+const pick = {};         // chosen size per piece
+let quote = null;        // { key, shipping } for the current cart + country
+let quoting = false, quoteErr = "";
+let st = { svc: null, xc: 0, xd: 0, bg: false, rush: false, sheet: false };
+
+$("#contact").textContent = catalog.contact;
+$("#c-country").innerHTML = '<option value="">Select a country</option>' + catalog.countries.map(([c, n]) => `<option value="${c}">${n}</option>`).join("");
+
+/* ---------- gallery ---------- */
+ART.forEach((a) => { const s = sizesFor(a); pick[a.id] = s[Math.min(1, s.length - 1)].id; });
+function pieceCard(a, i) {
+  const chips = sizesFor(a).map((s) =>
+    `<button type="button" class="sz" data-sz="${a.id}|${s.id}" aria-pressed="${pick[a.id] === s.id}">${s.name}<small>${money(s.price)}</small></button>`).join("");
+  return `<figure class="pc"><button class="piece" type="button" data-lb="${i}" aria-label="View ${esc(a.title)} larger">
+    <div class="mat"><span class="ph" style="--ar:${a.w}/${a.h}"><img src="${a.src}" width="${a.w}" height="${a.h}" alt="${esc(a.alt)}" loading="lazy"></span></div></button>
+    <figcaption><b>${esc(a.title)}</b><span>${esc(a.medium)}</span></figcaption>
+    <div class="sizes" role="group" aria-label="Size for ${esc(a.title)}">${chips}</div>
+    <button class="btn ghost sm add" type="button" data-add="${a.id}">Add to order</button></figure>`;
+}
+$("#cols").innerHTML = ART.map(pieceCard).join("");
+
+/* ---------- commissions (unchanged menu; requests are copied, not paid here) ---------- */
+const DIG = [
+  { id: "icon", n: "Icon", p: 80, d: "Headshot, painted style, simple color background. Great for profile pictures." },
+  { id: "chibi", n: "Chibi", p: 100, d: "Full chibi character, simple pose, flat or soft-shaded background." },
+  { id: "half", n: "Half Body", p: 140, d: "Waist-up, full rendering and lighting, one simple background included." },
+  { id: "full", n: "Full Body", p: 220, d: "Complete character, full rendering, dynamic pose. Detailed background is an add-on." }
+];
+const TRAD = [
+  { id: "wc", n: "Watercolor, Mini", p: 40, d: "4x6in, small quick watercolor study. A lower-cost way to get a traditional piece." },
+  { id: "aos", n: "Acrylic/Oil, Small", p: 140, d: "9x12in canvas, landscape or nature scene, full traditional painting." },
+  { id: "aom", n: "Acrylic/Oil, Medium", p: 260, d: "11x14in canvas, more detail and richer layered color." },
+  { id: "aol", n: "Acrylic/Oil, Large", p: 400, d: "16x20in canvas, fully detailed scene." }
+];
+const ADDS = [
+  { id: "xc", n: "Extra character", kind: "count", tag: "+$60 per extra" },
+  { id: "xd", n: "Extra details", kind: "count", tag: "+$20 per extra" },
+  { id: "bg", n: "Detailed background", kind: "toggle", tag: "+$30" },
+  { id: "rush", n: "Rush order (3-day turnaround)", kind: "toggle", tag: "+30%" },
+  { id: "sheet", n: "Reference sheet (2 poses)", kind: "toggle", tag: "+$45" }
+];
+const allSvc = DIG.concat(TRAD);
+const row = (s) => `<label class="svc" for="svc-${s.id}"><input type="radio" name="svc" id="svc-${s.id}" value="${s.id}"><span class="svc-in"><span class="ring"></span><span class="nm">${s.n}</span><span class="pr">${money(s.p)}</span><span class="ds">${s.d}</span></span></label>`;
+$("#dig").innerHTML = DIG.map(row).join("");
+$("#trad").innerHTML = TRAD.map(row).join("");
+$("#adds").innerHTML = ADDS.map((a) => a.kind === "count"
+  ? `<div class="ad"><div class="ctl"><div class="qty" role="group" aria-label="${a.n}"><button type="button" data-ad="${a.id}" data-d="-1" aria-label="Fewer: ${a.n}">&minus;</button><output id="out-${a.id}">0</output><button type="button" data-ad="${a.id}" data-d="1" aria-label="More: ${a.n}">+</button></div></div><span class="adn">${a.n}</span><span class="adp">${a.tag}</span></div>`
+  : `<label class="ad" for="ad-${a.id}"><span class="ctl"><input type="checkbox" id="ad-${a.id}" data-tg="${a.id}"></span><span class="adn">${a.n}</span><span class="adp">${a.tag}</span></label>`).join("");
+
+/* ---------- totals ---------- */
+function calc() {
+  const lines = cart.map((c) => { const a = artById(c.art), s = sizeOf(a, c.size);
+    return { art: a, size: s, qty: c.qty, total: s.price * c.qty, key: c.art + "|" + c.size }; });
+  const items = lines.reduce((n, l) => n + l.total, 0);
+  const physical = lines.some((l) => !l.size.digital);
+  const hasDigital = lines.some((l) => l.size.digital);
+  return { lines, items, physical, hasDigital, count: lines.reduce((n, l) => n + l.qty, 0) };
+}
+function commCalc() {
+  if (!st.svc) return null;
+  const s = allSvc.find((x) => x.id === st.svc), lines = [{ n: s.n, p: s.p }];
+  if (st.xc) lines.push({ n: "Extra character × " + st.xc, p: 60 * st.xc });
+  if (st.xd) lines.push({ n: "Extra details × " + st.xd, p: 20 * st.xd });
+  if (st.bg) lines.push({ n: "Detailed background", p: 30 });
+  if (st.sheet) lines.push({ n: "Reference sheet (2 poses)", p: 45 });
+  const sub = lines.reduce((n, l) => n + l.p, 0), rush = st.rush ? sub * 0.3 : 0;
+  if (st.rush) lines.push({ n: "Rush order (30%)", p: rush });
+  return { svc: s, lines, total: sub + rush, deposit: (sub + rush) / 2, trad: TRAD.includes(s) };
+}
+const country = () => $("#c-country").value;
+const cartKey = (c) => country() + "::" + JSON.stringify(cart);
+
+async function refreshQuote() {
+  const c = calc();
+  quote = null; quoteErr = "";
+  if (!c.lines.length) { render(); return; }
+  if (!c.physical) { quote = { key: cartKey(c), shipping: 0 }; render(); return; }
+  if (!country()) { render(); return; }
+  const key = cartKey(c);
+  quoting = true; render();
+  try {
+    const res = await fetch("/api/quote", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ cart, country: country() }) });
+    const data = await res.json();
+    if (key !== cartKey(calc())) return; // cart changed while waiting
+    if (!res.ok) throw new Error(data.error || "Couldn't calculate shipping.");
+    quote = { key, shipping: data.shipping };
+  } catch (e) { quoteErr = e.message || "Couldn't calculate shipping."; }
+  quoting = false; render();
+}
+
+function render() {
+  const c = calc(), cc = commCalc();
+  const shipping = quote ? quote.shipping : null;
+  const total = c.items + (shipping || 0);
+
+  $("#bar-s").textContent = [c.count ? c.count + " item" + (c.count > 1 ? "s" : "") : "", cc ? cc.svc.n + " commission" : ""].filter(Boolean).join(" + ") || "Nothing added yet";
+  $("#bar-p").textContent = money(c.items);
+
+  let h = "";
+  if (!c.lines.length) h = '<p class="empty">Your order is empty. Add a print above.</p>';
+  else {
+    h = c.lines.map((l) => `<div class="cl"><img src="${l.art.src}" alt=""><div class="cn">${esc(l.art.title)}<small>${l.size.name}${l.size.digital ? " · high-res download" : " print"} · ${money(l.size.price)} each</small></div>
+      <div class="cr"><b>${money(l.total)}</b><div class="qty" role="group" aria-label="Quantity: ${esc(l.art.title)} ${l.size.name}"><button type="button" data-q="${l.key}" data-d="-1" aria-label="Fewer">&minus;</button><output>${l.qty}</output><button type="button" data-q="${l.key}" data-d="1" aria-label="More">+</button></div></div></div>`).join("");
+    h += `<div class="ln"><span>Items</span><span>${money(c.items)}</span></div>`;
+    if (c.physical) h += `<div class="ln dim"><span>Shipping</span><span>${quoting ? "Calculating…" : shipping !== null ? money(shipping) : "Choose a country"}</span></div>`;
+    h += `<div class="ln rule big"><span>Total</span><span>${shipping !== null ? money(total) : money(c.items) + "+"}</span></div>`;
+    if (c.hasDigital) h += '<p class="how">Digital files are emailed to you after payment.</p>';
+  }
+  $("#sum").innerHTML = h;
+
+  $("#co").hidden = !c.lines.length;
+  $("#ship-fields").hidden = !c.physical;
+  $("#ship-fields").querySelectorAll("input,select").forEach((el) => { el.required = c.physical && ["c-country", "c-line1", "c-city", "c-zip"].includes(el.id); });
+  const ready = c.lines.length && !quoting && shipping !== null;
+  $("#pay-stripe").disabled = !ready; $("#pay-paypal").disabled = !ready;
+  $("#err").textContent = quoteErr;
+
+  // commission card
+  $("#comm-card").hidden = !cc;
+  $("#addbox").classList.toggle("off", !st.svc);
+  $("#out-xc").textContent = st.xc; $("#out-xd").textContent = st.xd;
+  if (cc) {
+    $("#csum").innerHTML = cc.lines.map((l) => `<div class="ln"><span>${l.n}</span><span>${money(l.p)}</span></div>`).join("") +
+      `<div class="ln rule big"><span>Estimated total</span><span>${money(cc.total)}</span></div><div class="ln dim"><span>50% deposit to start</span><span>${money(cc.deposit)}</span></div>` +
+      (cc.trad ? '<div class="ln dim"><span>Shipping</span><span>Calculated separately</span></div>' : "");
+    let t = "COMMISSION REQUEST: Mistyarts\n\n";
+    cc.lines.forEach((l) => { t += l.n + " ... " + money(l.p) + "\n"; });
+    t += "\nEstimated total: " + money(cc.total) + "\n50% deposit: " + money(cc.deposit) + "\n";
+    if (cc.trad) t += "Shipping: calculated separately\n";
+    t += "Private commission: " + ($("#f-private").checked ? "Yes" : "No") + "\n\nName: " + $("#f-name").value + "\nContact: " + $("#f-contact").value + "\n\nDetails:\n" + $("#f-notes").value + "\n";
+    $("#out").value = t;
+  }
+}
+
+/* ---------- checkout ---------- */
+function customerPayload() {
+  const c = calc();
+  const v = (id) => $(id).value.trim();
+  const customer = { name: v("#c-name"), email: v("#c-email"), phone: v("#c-phone") };
+  if (c.physical) customer.address = { line1: v("#c-line1"), line2: v("#c-line2"), townOrCity: v("#c-city"),
+    stateOrCounty: v("#c-state"), postalOrZipCode: v("#c-zip"), countryCode: country() };
+  return customer;
+}
+async function pay(kind, btn) {
+  const form = $("#co");
+  $("#err").textContent = "";
+  if (!form.reportValidity()) return;
+  const stateNeeded = calc().physical && catalog.stateRequired.includes(country()) && !$("#c-state").value.trim();
+  if (stateNeeded) { $("#err").textContent = "Please enter your state or province."; $("#c-state").focus(); return; }
+  const old = btn.textContent; btn.disabled = true; btn.textContent = "One moment…";
+  try {
+    const res = await fetch("/api/checkout/" + kind, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ cart, customer: customerPayload() }) });
+    const data = await res.json();
+    if (!res.ok || !data.url) throw new Error(data.error || "Couldn't start checkout.");
+    location.href = data.url;
+  } catch (e) {
+    $("#err").textContent = e.message || "Couldn't start checkout.";
+    btn.disabled = false; btn.textContent = old;
+  }
+}
+
+/* ---------- lightbox ---------- */
+let cur = 0, lastFocus = null;
+function showLb(i) { cur = (i + ART.length) % ART.length; const a = ART[cur];
+  $("#lb-img").src = a.src; $("#lb-img").alt = a.alt; $("#lb-t").textContent = a.title; $("#lb-m").textContent = a.medium; }
+function openLb(i) { lastFocus = document.activeElement; showLb(i); $("#lb").hidden = false; document.body.classList.add("locked"); $(".lbx").focus(); }
+function closeLb() { $("#lb").hidden = true; document.body.classList.remove("locked"); if (lastFocus && lastFocus.focus) lastFocus.focus(); }
+
+/* ---------- events ---------- */
+document.addEventListener("click", (e) => {
+  const b = e.target.closest("button");
+  if (!b) return;
+  if (b.dataset.lb) {
+    if (b.dataset.lb === "close") closeLb();
+    else if (b.classList.contains("piece")) openLb(Number(b.dataset.lb));
+    else showLb(cur + Number(b.dataset.lb));
+    return;
+  }
+  if (b.dataset.sz) {
+    const [id, sz] = b.dataset.sz.split("|"); pick[id] = sz;
+    [...b.parentNode.children].forEach((x) => x.setAttribute("aria-pressed", x === b ? "true" : "false"));
+    return;
+  }
+  if (b.dataset.add) {
+    const id = b.dataset.add, size = pick[id], hit = cart.find((c) => c.art === id && c.size === size);
+    if (hit) hit.qty = Math.min(20, hit.qty + 1); else cart.push({ art: id, size, qty: 1 });
+    const old = b.textContent; b.textContent = "Added ✓"; setTimeout(() => { b.textContent = old; }, 1200);
+    refreshQuote(); return;
+  }
+  if (b.dataset.q) {
+    const [id, sz] = b.dataset.q.split("|");
+    cart.forEach((c) => { if (c.art === id && c.size === sz) c.qty += Number(b.dataset.d); });
+    cart = cart.filter((c) => c.qty > 0); refreshQuote(); return;
+  }
+  if (b.dataset.ad) { st[b.dataset.ad] = Math.max(0, Math.min(9, st[b.dataset.ad] + Number(b.dataset.d))); render(); return; }
+  if (b.id === "clear-comm") {
+    st = { svc: null, xc: 0, xd: 0, bg: false, rush: false, sheet: false };
+    document.querySelectorAll('input[name="svc"],[data-tg]').forEach((r) => { r.checked = false; });
+    render(); return;
+  }
+  if (b.id === "pay-stripe") return void pay("stripe", b);
+  if (b.id === "pay-paypal") return void pay("paypal", b);
+  if (b.id === "copy") {
+    render();
+    const ta = $("#out"), old = b.textContent;
+    const done = (m) => { b.textContent = m; setTimeout(() => { b.textContent = old; }, 1800); };
+    const fallback = () => { ta.focus(); ta.select(); done("Select and copy the text above"); };
+    try { navigator.clipboard.writeText(ta.value).then(() => done("Copied"), fallback); } catch { fallback(); }
+  }
+});
+$("#lb").addEventListener("click", (e) => { if (e.target === $("#lb")) closeLb(); });
+document.addEventListener("change", (e) => {
+  const t = e.target;
+  if (t.id === "c-country") refreshQuote();
+  else if (t.name === "svc") { st.svc = t.value; render(); }
+  else if (t.dataset.tg) { st[t.dataset.tg] = t.checked; render(); }
+  else if (t.id === "f-private") render();
+});
+document.addEventListener("input", (e) => { if (e.target.id && e.target.id.startsWith("f-")) render(); });
+document.addEventListener("keydown", (e) => {
+  if ($("#lb").hidden) return;
+  if (e.key === "Escape") closeLb(); else if (e.key === "ArrowLeft") showLb(cur - 1); else if (e.key === "ArrowRight") showLb(cur + 1);
+});
+$("#co").addEventListener("submit", (e) => e.preventDefault());
+
+/* ---------- coming back from Stripe / PayPal ---------- */
+function banner(msg, bad) { const b = $("#banner"); b.textContent = msg; b.className = "banner" + (bad ? " bad" : ""); b.hidden = false; b.scrollIntoView({ block: "center" }); }
+async function handleReturn() {
+  const q = new URLSearchParams(location.search);
+  if (!q.toString()) return;
+  history.replaceState(null, "", location.pathname);
+  if (q.get("paid")) banner("Thank you! Your payment went through. A receipt is on its way to your email, and your order is being prepared.");
+  else if (q.get("cancelled")) banner("Checkout was cancelled. You haven't been charged.", true);
+  else if (q.get("paypal") === "return" && q.get("token")) {
+    banner("Finishing your PayPal payment…");
+    try {
+      const res = await fetch("/api/paypal/capture", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ token: q.get("token") }) });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "PayPal payment didn't finish.");
+      banner("Thank you! Your PayPal payment went through, and your order is being prepared.");
+    } catch (e) { banner(e.message + " If you were charged, message " + catalog.contact + ".", true); }
+  }
+}
+
+render();
+handleReturn();
+</script>
+</body>
+</html>
